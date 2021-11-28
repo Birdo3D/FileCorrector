@@ -21,15 +21,12 @@ public class FileCorrector {
                 Scanner scanner = new java.util.Scanner(System.in);
                 if (scanner.next().equalsIgnoreCase("o")) {
                     List<Integer> errors = new ArrayList<>();
-                    for (int i = 1; i <= getLengt(src_file); i++) {
-                        System.out.println("ligne " + i);
-                        try (Stream<String> lines = Files.lines(Paths.get(String.valueOf(src_file)))) {
-                            String line = lines.skip(i - 1).findFirst().get();
-                            System.out.println(line);
-                            String[] values = line.split(",");
-                            if (values.length != 57)
-                                errors.add(i);
-                        }
+                    int lengt;
+                    lengt = getLengt(src_file);
+                    for (int i = 1; i <= lengt; i++) {
+                        if (Files.lines(Paths.get(String.valueOf(src_file))).skip(i - 1).findFirst().get().split(",").length != 57)
+                            errors.add(i);
+                        System.out.println("| Ligne : " + i + " || Erreurs : " + errors.size() + " |");
                     }
                     if (errors.size() != 0) {
                         FileWriter writer = new FileWriter(errors_file);
